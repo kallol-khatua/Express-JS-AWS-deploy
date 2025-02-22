@@ -13,7 +13,8 @@ app.get("/", async (req, res) => {
         port: port,
         // env: process.env.DATA,
         method: req.method,
-        path: req.path
+        path: req.path,
+        update: "Auto github deploy"
     };
     // console.log(req.method + " " + req.path)
     // console.log("Response: ", response)
@@ -28,7 +29,8 @@ app.get("/hello-world", async (req, res) => {
         port: port,
         // env: process.env.DATA,
         method: req.method,
-        path: req.path
+        path: req.path,
+        update: "Auto github deploy"
     };
     // console.log(req.method + " " + req.path)
     // console.log("Response: ", response)

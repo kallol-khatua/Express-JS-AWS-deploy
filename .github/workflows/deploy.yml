@@ -23,9 +23,24 @@ jobs:
           chmod 600 private_key.pem
           
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
-            cd ~/node-app || git clone https://github.com/kallol-khatua/Express-JS-AWS-deploy.git node-app && cd node-app
+            
+            # Setup the Node.js app
+            cd ~/node-app
             git pull origin main
             npm install
-            pm2 restart all || pm2 start app.js --name "node-app"
+            
+            # Ensure PM2 is installed
+            pm2 -v || sudo npm install -g pm2
+            
+            # Restart or start the app with PM2
+            pm2 restart node-app || pm2 start app.js --name "node-app"
+            pm2 save
+            pm2 startup systemd
+            
+            # Configure Nginx            
+            # sudo ln -sf /etc/nginx/sites-available/node-app /etc/nginx/sites-enabled/
+            sudo nginx -t
+            sudo systemctl restart nginx
+            
             exit
           EOF
