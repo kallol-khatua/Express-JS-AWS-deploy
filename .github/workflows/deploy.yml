@@ -23,7 +23,7 @@ jobs:
           chmod 600 private_key.pem
           
           ssh -o StrictHostKeyChecking=no -i private_key.pem $EC2_USER@$EC2_HOST << 'EOF'
-            cd ~/node-app || git clone git@github.com:kallol-khatua/Express-JS-AWS-deploy.git node-app && cd node-app
+            cd ~/node-app || git clone https://github.com/kallol-khatua/Express-JS-AWS-deploy.git node-app && cd node-app
             git pull origin main
             npm install
             pm2 restart all || pm2 start app.js --name "node-app"
