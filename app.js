@@ -17,7 +17,12 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.get("/", async (req, res) => {
-    res.render("./home.ejs", { name: "kallol" })
+    const userName = "Kallol Khatua"
+    res.render("./home.ejs", { name: userName })
+})
+
+app.get("/about", async (req, res) => {
+    res.render("./about.ejs", { name: "kallol" })
 })
 
 app.get("/hello-world", async (req, res) => {
