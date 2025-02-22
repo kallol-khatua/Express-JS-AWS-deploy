@@ -2,23 +2,22 @@ const express = require("express");
 const path = require("path");
 require("dotenv").config();
 const app = express();
+const ejsMate = require("ejs-mate");
+const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 3000;
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname, "/public")));
+
 app.get("/", async (req, res) => {
-    const response = {
-        statsCode: 200,
-        message: "connected",
-        success: true,
-        port: port,
-        // env: process.env.DATA,
-        method: req.method,
-        path: req.path,
-        update: "Auto github deploy"
-    };
-    // console.log(req.method + " " + req.path)
-    // console.log("Response: ", response)
-    res.status(200).send(response)
+    res.render("./home.ejs", { name: "kallol" })
 })
 
 app.get("/hello-world", async (req, res) => {
@@ -32,8 +31,6 @@ app.get("/hello-world", async (req, res) => {
         path: req.path,
         update: "Auto github deploy"
     };
-    // console.log(req.method + " " + req.path)
-    // console.log("Response: ", response)
     res.status(200).send(response)
 })
 
